@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load subtract_filter %}
+{% block content %}
+{%include 'navigation.html' %}
+
+<h1 class="text-center my-3">Projections</h1>
+{% if movies %}
+{% for movie in movies %}
+<div class="card col-12 col-md-5 offset-md-1 my-4">
+  <div class="card-body">
+    <p class="lead">
+      {{ movie.id}} -
+      <a href="{{ movie.get_absolute_url }}">{{ movie.movie_name }}</a>
+    </p>
+    <p class="d-flex align-items-center justify-content-between">
+      Time: {{ movie.movie_time|time:"H:i" }} ---- Hall Capacity:
+      {{movie.hall_capacity }} ---- Seats left: {{movie.hall_capacity|sub:movie.card_set.all.count }}
+      {%if movie.hall_capacity|sub:movie.card_set.all.count > 0 %}
+      <a href="{{ movie.get_absolute_url }}buy-ticket" class="btn btn-primary text-white">Buy Ticket</a>
+      {% else %}
+      <button class="btn btn-outline-primary" disabled>Sold Out</button>
+      {% endif %}
+    </p>
+    {% if user.is_staff %}
+    <p class="my-2 p-2 d-inline-block" href="#" style="border: 1px dashed black">
+      Cards Sold: {{ movie.card_set.all.count }}
+    </p>
+    {% endif %}
+  </div>
+</div>
+{% endfor %} {% else %}
+<p>Currently no movies are available.</p>
+{% endif %} {% endblock %}

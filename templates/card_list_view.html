@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block content %} {%include 'navigation.html' %}
+
+<h1 class="text-center my-3">{{ user.username }}'s Tickets</h1>
+{% if tickets %} {% for ticket in tickets %}
+<div class="card mb-3">
+  <div class="card-body">
+    <p class="lead">
+      {{ ticket.id }} - {{ ticket.movie }} ----
+      <span>Time: {{ ticket.movie.movie_time|time:"H:i" }}</span>
+    </p>
+    <p class="d-flex justify-content-between">
+      User: {{ ticket.user }} ---- Seat No.: {{ticket.seat_number }}
+    </p>
+  </div>
+</div>
+{% endfor %} {% else %}
+<p>Currently no tickets bought.</p>
+{% endif %} {% endblock %}

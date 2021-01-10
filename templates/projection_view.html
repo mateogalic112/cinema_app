@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% load subtract_filter %} {% block content %}
+{%include 'navigation.html' %}
+
+<div class="container">
+  <div class="row">
+    <h1 class="mb-5 mt-4">{{ movie.movie_name }}</h1>
+    <h5>Time: <span>{{ movie.movie_time|time:"H:i" }}</span></h5>
+    <h5>Seats: <span>{{ movie.hall_capacity}}</span></h5>
+    {%if movie.hall_capacity|sub:movie.card_set.all.count > 0 %}
+    <a href="{{ movie.get_absolute_url }}buy-ticket" class="btn btn-primary text-white col-12 col-md-2 mt-4">Buy
+      Ticket</a>
+    {% else %}
+    <button class="btn btn-outline-primary col-12 col-md-2 mt-4" disabled>
+      Sold Out
+    </button>
+    {% endif %}
+    {% if user.is_staff %}
+    <h3 class="mb-3 mt-5">Movie viewers</h3>
+    {% if allViewers %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Viewer</th>
+          <th scope="col">Cards Bought</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for key, value in allViewers.items %}
+        <tr>
+          <td>{{ key }}</td>
+          <td>{{ value }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <h5>Nobody bought card for this movie</h5>
+    {% endif %}
+    {% endif%}
+  </div>
+</div>
+
+{% endblock %}

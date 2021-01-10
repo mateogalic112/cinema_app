@@ -1,0 +1,12 @@
+{% extends 'base.html' %} {% block content %} {%include 'navigation.html' %}
+
+<h1 class="text-center my-3">{{ movie.movie_name }} Viewers</h1>
+{% if viewers %} {% for viewer in viewers %}
+<div class="card mb-3">
+  <div class="card-body">
+    <p class="lead">Viewer: {{ viewer.id }} - {{ viewer.username }}</p>
+  </div>
+</div>
+{% endfor %} {% else %}
+<p>No viewer data available.</p>
+{% endif %} {% endblock %}

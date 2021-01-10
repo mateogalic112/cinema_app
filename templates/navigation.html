@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{% url 'home' %}">Home</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarText"
+    aria-controls="navbarText"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+      {% if user.is_authenticated %}
+
+    <ul class="navbar-nav p-3">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'projections' %}">Projections</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'tickets' %}">Tickets</a>
+      </li>
+    
+    </ul>
+    <a class="nav-link btn btn-outline-dark" href="{% url 'logout' %}" style="margin-left: auto;">Logout</a>
+      {% else %}
+      <a class="nav-link" href="{% url 'login' %}">Login</a>
+      {% endif %}
+
+    
+  </div>
+</nav>

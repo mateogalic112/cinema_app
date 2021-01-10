@@ -1,0 +1,20 @@
+{% extends 'base.html' %} {% block content %}
+    {% include 'navigation.html' %}
+  <h3 class="my-4">Buy ticket for {{ movie.movie_name }}, {{ user.username }}</h3>
+<form method="POST" class="form-control d-flex align-items-center">
+  {% csrf_token %}
+  <span>Choose a seat: </span>
+  <select name="seat_number" style="margin-left: .5rem; margin-right: 1rem;">
+    {% with ''|center:movie.hall_capacity as range %}
+      {% for _ in range %}
+        {% if forloop.counter not in bought_cards %}
+          <option>{{ forloop.counter }}</option>
+        {% endif %}
+      {% endfor %}
+    {% endwith %}
+  </select>
+  <input type="hidden" name="movie" value={{ movie.id }} />
+  <input type="hidden" name="user" value={{ user.username }} />
+  <input type="submit" value="Buy" class="btn btn-primary" style="width: 5rem" />
+</form>
+{% endblock %}
